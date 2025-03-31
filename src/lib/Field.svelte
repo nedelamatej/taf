@@ -22,7 +22,7 @@
   import vertexShader from './shaders/vertex.glsl?raw';
   import fragmentShader from './shaders/fragment.glsl?raw';
 
-  const { pitch } = $props();
+  let { pitch } = $props();
 
   const OUTFIELD_DISTANCE = 76.2;
   const PITCHING_DISTANCE = 14.02;
@@ -40,7 +40,8 @@
     uniforms={{
       OUTFIELD_DISTANCE: { value: OUTFIELD_DISTANCE },
       PITCHING_DISTANCE: { value: PITCHING_DISTANCE },
-      pitch: { value: pitch }
+      pitch: { value: 0 }
     }}
+    uniforms.pitch.value={pitch}
   />
 </T.Mesh>
