@@ -21,6 +21,7 @@ varying vec3 vPosition; ///< varying variable to receive the position from the v
 
 uniform float OUTFIELD_DISTANCE;
 uniform float PITCHING_DISTANCE;
+uniform vec3[50] pitch;
 
 /**
  * @brief Rotates a point by 45 degrees
@@ -173,7 +174,7 @@ void main() {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     return;
   } else if (pitchersPlate < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
@@ -183,7 +184,7 @@ void main() {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     return;
   } else if (homePlate < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
@@ -193,7 +194,7 @@ void main() {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     return;
   } else if (firstBase < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
@@ -203,7 +204,7 @@ void main() {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     return;
   } else if (secondBase < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
@@ -213,64 +214,77 @@ void main() {
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     return;
   } else if (thirdBase < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // grass line
   if (abs(sdfCircle(vPosition.xz, vec2(18.29 / sqrt(2.0), 0.0), 18.29)) < 0.05 && vPosition.x > abs(vPosition.z)) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // pitcher's circle
   if (abs(sdfCircle(vPosition.xz, vec2(PITCHING_DISTANCE, 0.0), 2.44)) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // right foul line
   if (sdfSegment(vPosition.xz, vec2(1.28, 1.28), vec2(OUTFIELD_DISTANCE / sqrt(2.0), OUTFIELD_DISTANCE / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // left foul line
   if (sdfSegment(vPosition.xz, vec2(1.28, -1.28), vec2(OUTFIELD_DISTANCE / sqrt(2.0), -OUTFIELD_DISTANCE / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // right line
   if (sdfSegment(vPosition.xz, vec2(18.29 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // left line
   if (sdfSegment(vPosition.xz, vec2(18.29 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // right batter's box
   if (abs(sdfBox(vPosition.xz, vec2(-0.694, 0.37), vec2(1.436, 1.28))) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // left batter's box
   if (abs(sdfBox(vPosition.xz, vec2(-0.694, -0.37), vec2(1.436, -1.28))) < 0.05) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
   // catcher's box
   if (abs(sdfBox(vPosition.xz, vec2(-3.744, -1.28), vec2(-0.694, 1.28))) < 0.05 && vPosition.x < abs(vPosition.z) - 1.974) {
-    gl_FragColor = vec4(0.3, 0.3, 0.3, 1.0);
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
-  gl_FragColor = vec4(0.9, 0.9, 0.9, 1.0);
-  return;
+  float r = 0.93;
+  float g = 0.93;
+  float b = 0.93;
+
+  // pitch shadow
+  for (int i = 0; i < 49; ++i) {
+    float pitchShadow = sdfSegment(vPosition.xz, pitch[i].xz, pitch[i + 1].xz);
+    if (pitchShadow < 0.1) {
+      r = min(r, mix(0.93, 0.78, smoothstep(0.1, 0.0, pitchShadow) / 2.0));
+      g = min(g, mix(0.93, 0.16, smoothstep(0.1, 0.0, pitchShadow) / 2.0));
+      b = min(b, mix(0.93, 0.16, smoothstep(0.1, 0.0, pitchShadow) / 2.0));
+    }
+  }
+
+  gl_FragColor = vec4(r, g, b, 1.0);
 }
