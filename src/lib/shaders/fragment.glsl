@@ -281,6 +281,30 @@ void main() {
     return;
   }
 
+  // right coach's box
+  if (sdfSegment(vPosition.xz, vec2(9.15 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(10.06 / sqrt(2.0), 17.38 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  } else if (sdfSegment(vPosition.xz, vec2(10.06 / sqrt(2.0), 17.38 / sqrt(2.0)), vec2(14.63 / sqrt(2.0), 21.95 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  } else if (sdfSegment(vPosition.xz, vec2(14.63 / sqrt(2.0), 21.95 / sqrt(2.0)), vec2(13.72 / sqrt(2.0), 22.86 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  }
+
+  // left coach's box
+  if (sdfSegment(vPosition.xz, vec2(9.15 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(10.06 / sqrt(2.0), -17.38 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  } else if (sdfSegment(vPosition.xz, vec2(10.06 / sqrt(2.0), -17.38 / sqrt(2.0)), vec2(14.63 / sqrt(2.0), -21.95 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  } else if (sdfSegment(vPosition.xz, vec2(14.63 / sqrt(2.0), -21.95 / sqrt(2.0)), vec2(13.72 / sqrt(2.0), -22.86 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  }
+
   float r = 0.93;
   float g = 0.93;
   float b = 0.93;
