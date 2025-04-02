@@ -242,13 +242,13 @@ void main() {
     return;
   }
 
-  // right line
+  // right base line
   if (sdfSegment(vPosition.xz, vec2(18.29 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)) < 0.05) {
     gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
 
-  // left line
+  // left base line
   if (sdfSegment(vPosition.xz, vec2(18.29 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)) < 0.05) {
     gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
@@ -268,6 +268,15 @@ void main() {
 
   // catcher's box
   if (abs(sdfBox(vPosition.xz, vec2(-3.744, -1.28), vec2(-0.694, 1.28))) < 0.05 && vPosition.x < abs(vPosition.z) - 1.974) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  }
+
+  // one meter line
+  if (sdfSegment(vPosition.xz, vec2(9.145 / sqrt(2.0), 9.145 / sqrt(2.0)), vec2(8.235 / sqrt(2.0), 10.055 / sqrt(2.0))) < 0.05) {
+    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
+    return;
+  } else if (sdfSegment(vPosition.xz, vec2(8.235 / sqrt(2.0), 10.055 / sqrt(2.0)), vec2(17.38 / sqrt(2.0), 19.2 / sqrt(2.0))) < 0.05) {
     gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
     return;
   }
