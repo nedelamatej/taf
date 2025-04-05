@@ -308,6 +308,12 @@ void main() {
     return;
   }
 
+  // bounding box
+  if (vPosition.x > PITCHING_DISTANCE || vPosition.x < -0.694 || abs(vPosition.z) > 1.28) {
+    gl_FragColor = vec4(0.93, 0.93, 0.93, 1.0);
+    return;
+  }
+
   float pitch1Shadow = 0.1;
   float pitch2Shadow = 0.1;
   float pitch3Shadow = 0.1;
