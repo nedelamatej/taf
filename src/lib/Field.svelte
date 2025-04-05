@@ -35,6 +35,7 @@
   rotation.z={-Math.PI / 4}
 >
   <T.PlaneGeometry args={[OUTFIELD_DISTANCE + 8.23, OUTFIELD_DISTANCE + 8.23]} />
+
   <T.ShaderMaterial
     {vertexShader}
     {fragmentShader}
@@ -47,8 +48,8 @@
       pitch3: { value: 0 }
     }}
     uniforms.enabled.value={[!!pitch1, !!pitch2, !!pitch3]}
-    uniforms.pitch1.value={pitch1 || Array(10).fill(new Vector3())}
-    uniforms.pitch2.value={pitch2 || Array(10).fill(new Vector3())}
-    uniforms.pitch3.value={pitch3 || Array(10).fill(new Vector3())}
+    uniforms.pitch1.value={pitch1?.getPoints(9) || Array(10).fill(new Vector3())}
+    uniforms.pitch2.value={pitch2?.getPoints(9) || Array(10).fill(new Vector3())}
+    uniforms.pitch3.value={pitch3?.getPoints(9) || Array(10).fill(new Vector3())}
   />
 </T.Mesh>
