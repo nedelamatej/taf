@@ -21,7 +21,10 @@ varying vec3 vPosition; ///< varying variable to receive the position from the v
 
 uniform float OUTFIELD_DISTANCE;
 uniform float PITCHING_DISTANCE;
-uniform vec3[50] pitch;
+uniform bvec3 enabled;
+uniform vec3[10] pitch1;
+uniform vec3[10] pitch2;
+uniform vec3[10] pitch3;
 
 /**
  * @brief Rotates a point by 45 degrees
@@ -305,19 +308,20 @@ void main() {
     return;
   }
 
-  float r = 0.93;
-  float g = 0.93;
-  float b = 0.93;
+  float pitch1Shadow = 0.1;
+  float pitch2Shadow = 0.1;
+  float pitch3Shadow = 0.1;
 
-  // pitch shadow
-  for (int i = 0; i < 49; ++i) {
-    float pitchShadow = sdfSegment(vPosition.xz, pitch[i].xz, pitch[i + 1].xz);
-    if (pitchShadow < 0.1) {
-      r = min(r, mix(0.93, 0.78, smoothstep(0.1, 0.0, pitchShadow) / 2.0));
-      g = min(g, mix(0.93, 0.16, smoothstep(0.1, 0.0, pitchShadow) / 2.0));
-      b = min(b, mix(0.93, 0.16, smoothstep(0.1, 0.0, pitchShadow) / 2.0));
-    }
+  // pitch shadows
+  for (int i = 0; i < 9; ++i) {
+    if (enabled[0]) pitch1Shadow = min(pitch1Shadow, sdfSegment(vPosition.xz, pitch1[i].xz, pitch1[i + 1].xz));
+    if (enabled[1]) pitch2Shadow = min(pitch2Shadow, sdfSegment(vPosition.xz, pitch2[i].xz, pitch2[i + 1].xz));
+    if (enabled[2]) pitch3Shadow = min(pitch3Shadow, sdfSegment(vPosition.xz, pitch3[i].xz, pitch3[i + 1].xz));
   }
+
+  float r = (mix(0.93, 0.78, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(0.93, 0.18, smoothstep(0.1, 0.0, pitch2Shadow)) + mix(0.93, 0.08, smoothstep(0.1, 0.0, pitch3Shadow))) / 3.0;
+  float g = (mix(0.93, 0.16, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(0.93, 0.49, smoothstep(0.1, 0.0, pitch2Shadow)) + mix(0.93, 0.40, smoothstep(0.1, 0.0, pitch3Shadow))) / 3.0;
+  float b = (mix(0.93, 0.16, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(0.93, 0.20, smoothstep(0.1, 0.0, pitch2Shadow)) + mix(0.93, 0.75, smoothstep(0.1, 0.0, pitch3Shadow))) / 3.0;
 
   gl_FragColor = vec4(r, g, b, 1.0);
 }

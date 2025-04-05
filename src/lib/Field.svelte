@@ -19,10 +19,11 @@
    */
 
   import { T } from '@threlte/core';
+  import { Vector3 } from 'three';
   import vertexShader from './shaders/vertex.glsl?raw';
   import fragmentShader from './shaders/fragment.glsl?raw';
 
-  let { pitch } = $props();
+  let { pitch1 = undefined, pitch2 = undefined, pitch3 = undefined } = $props();
 
   const OUTFIELD_DISTANCE = 76.2;
   const PITCHING_DISTANCE = 14.02;
@@ -40,8 +41,14 @@
     uniforms={{
       OUTFIELD_DISTANCE: { value: OUTFIELD_DISTANCE },
       PITCHING_DISTANCE: { value: PITCHING_DISTANCE },
-      pitch: { value: 0 }
+      enabled: { value: 0 },
+      pitch1: { value: 0 },
+      pitch2: { value: 0 },
+      pitch3: { value: 0 }
     }}
-    uniforms.pitch.value={pitch}
+    uniforms.enabled.value={[!!pitch1, !!pitch2, !!pitch3]}
+    uniforms.pitch1.value={pitch1 || Array(10).fill(new Vector3())}
+    uniforms.pitch2.value={pitch2 || Array(10).fill(new Vector3())}
+    uniforms.pitch3.value={pitch3 || Array(10).fill(new Vector3())}
   />
 </T.Mesh>
