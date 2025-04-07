@@ -23,10 +23,13 @@
   import vertexShader from './shaders/vertex.glsl?raw';
   import fragmentShader from './shaders/fragment.glsl?raw';
 
-  let { pitch1 = undefined, pitch2 = undefined, pitch3 = undefined } = $props();
-
-  const OUTFIELD_DISTANCE = 76.2;
-  const PITCHING_DISTANCE = 14.02;
+  let {
+    OUTFIELD_DISTANCE,
+    PITCHING_DISTANCE,
+    pitch1 = undefined,
+    pitch2 = undefined,
+    pitch3 = undefined
+  } = $props();
 </script>
 
 <T.Mesh
