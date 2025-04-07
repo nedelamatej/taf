@@ -19,7 +19,7 @@
    */
 
   import { T, extend } from '@threlte/core';
-  import { Color } from 'three';
+  import { Color, SRGBColorSpace } from 'three';
   import { Line2 } from 'three/addons/lines/Line2.js';
   import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
   import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
@@ -36,21 +36,21 @@
 
   {#if color === 'red'}
     <T.LineMaterial
-      color={new Color(0.78, 0.16, 0.16)}
+      color={new Color().setRGB(0.78, 0.16, 0.16, SRGBColorSpace)}
       linewidth={0.1}
       worldUnits={true}
       toneMapped={false}
     />
   {:else if color === 'green'}
     <T.LineMaterial
-      color={new Color(0.18, 0.49, 0.2)}
+      color={new Color().setRGB(0.18, 0.49, 0.2, SRGBColorSpace)}
       linewidth={0.1}
       worldUnits={true}
       toneMapped={false}
     />
   {:else if color === 'blue'}
     <T.LineMaterial
-      color={new Color(0.08, 0.4, 0.75)}
+      color={new Color().setRGB(0.08, 0.4, 0.75, SRGBColorSpace)}
       linewidth={0.1}
       worldUnits={true}
       toneMapped={false}
