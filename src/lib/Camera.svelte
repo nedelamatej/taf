@@ -52,42 +52,42 @@
   /**
    * @brief Sets the camera position for the right-handed batter view
    */
-  export function rightHandedBatterView() {
+  export function setRightHandedBatterView() {
     controls.setPosition(-1.5, 1.5, -0.75, true);
   }
 
   /**
    * @brief Sets the camera position for the left-handed batter view
    */
-  export function leftHandedBatterView() {
+  export function setLeftHandedBatterView() {
     controls.setPosition(-1.5, 1.5, 0.75, true);
   }
 
   /**
    * @brief Sets the camera position for the pitcher view
    */
-  export function pitcherView() {
+  export function setPitcherView() {
     controls.setPosition(PITCHING_DISTANCE, 1.5, 0, true);
   }
 
   /**
    * @brief Sets the camera position for the catcher view
    */
-  export function catcherView() {
+  export function setCatcherView() {
     controls.setPosition(-2.5, 1, 0, true);
   }
 
   /**
    * @brief Sets the camera position for the side view
    */
-  export function sideView() {
+  export function setSideView() {
     controls.setPosition(PITCHING_DISTANCE / 2, 0.75, 10, true);
   }
 
   /**
    * @brief Sets the camera position for the top view
    */
-  export function topView() {
+  export function setTopView() {
     controls.setPosition(PITCHING_DISTANCE / 2, 10, 0, true);
   }
 

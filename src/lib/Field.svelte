@@ -26,9 +26,9 @@
   let {
     OUTFIELD_DISTANCE,
     PITCHING_DISTANCE,
+    pitch0 = undefined,
     pitch1 = undefined,
-    pitch2 = undefined,
-    pitch3 = undefined
+    pitch2 = undefined
   } = $props();
 </script>
 
@@ -46,13 +46,13 @@
       OUTFIELD_DISTANCE: { value: OUTFIELD_DISTANCE },
       PITCHING_DISTANCE: { value: PITCHING_DISTANCE },
       enabled: { value: 0 },
+      pitch0: { value: 0 },
       pitch1: { value: 0 },
-      pitch2: { value: 0 },
-      pitch3: { value: 0 }
+      pitch2: { value: 0 }
     }}
-    uniforms.enabled.value={[!!pitch1, !!pitch2, !!pitch3]}
+    uniforms.enabled.value={[!!pitch0, !!pitch1, !!pitch2]}
+    uniforms.pitch0.value={pitch0?.getPoints(9) || Array(10).fill(new Vector3())}
     uniforms.pitch1.value={pitch1?.getPoints(9) || Array(10).fill(new Vector3())}
     uniforms.pitch2.value={pitch2?.getPoints(9) || Array(10).fill(new Vector3())}
-    uniforms.pitch3.value={pitch3?.getPoints(9) || Array(10).fill(new Vector3())}
   />
 </T.Mesh>
