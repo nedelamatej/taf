@@ -26,6 +26,14 @@
 
   extend({ Line2, LineMaterial });
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {any} [pitch]
+   * @property {'red' | 'green' | 'blue'} [color]
+   */
+
+  /** @type {Props} */
   let { pitch = undefined, color } = $props();
 
   let lineGeometry = $derived(new LineGeometry().setFromPoints(pitch.getPoints(20)));
