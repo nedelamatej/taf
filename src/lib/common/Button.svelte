@@ -23,19 +23,38 @@
   import { onDestroy, onMount } from 'svelte';
   import { browser } from '$app/environment';
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {boolean} [primary]
+   * @property {boolean} [secondary]
+   * @property {string} value
+   * @property {() => void} onclick
+   * @property {string} [icon] - fontawesome icon (e.g. 'fa-house')
+   * @property {string} [badge]
+   * @property {string} [badgeIcon]
+   * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+   * @property {boolean} [stopPropagation]
+   * @property {boolean} [disabled]
+   * @property {'center' | 'start'} [justifyContent]
+   * @property {'absolute' | 'static'} [childrenPosition]
+   * @property {string} [cssClass]
+   */
+
+  /** @type {Props} */
   let {
     primary = false,
     secondary = false,
     value,
     onclick,
-    icon = undefined, // fontawesome icon (e.g. 'fa-house')
+    icon = undefined,
     badge = undefined,
     badgeIcon = undefined,
-    shortcut = undefined, // mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+    shortcut = undefined,
     stopPropagation = false,
     disabled = false,
-    justifyContent = 'center', // 'center' or 'start'
-    childrenPosition = 'absolute', // 'absolute' or 'static'
+    justifyContent = 'center',
+    childrenPosition = 'absolute',
     cssClass = ''
   } = $props();
 
@@ -51,6 +70,7 @@
 
   onDestroy(() => {
     if (browser && shortcut && !disabled) {
+      // @ts-ignore
       Mousetrap.unbind(shortcut);
     }
   });
@@ -59,7 +79,7 @@
 <button
   onclick={(e) => {
     if (stopPropagation) e.stopPropagation();
-    if (onclick) onclick();
+    onclick();
   }}
   {disabled}
   type="button"
