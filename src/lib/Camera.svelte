@@ -47,6 +47,13 @@
     }
   });
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {number} PITCHING_DISTANCE
+   */
+
+  /** @type {Props} */
   let { PITCHING_DISTANCE } = $props();
 
   /**
