@@ -23,16 +23,30 @@
   import { onDestroy, onMount } from 'svelte';
   import { browser } from '$app/environment';
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {string} value
+   * @property {string} [label]
+   * @property {string} [placeholder]
+   * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+   * @property {number} [maxlength]
+   * @property {boolean} [uppercase]
+   * @property {boolean} [disabled]
+   */
+
+  /** @type {Props} */
   let {
     value = $bindable(),
-    label,
+    label = undefined,
     placeholder = undefined,
-    shortcut = undefined, // mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+    shortcut = undefined,
     maxlength = undefined,
     uppercase = false,
     disabled = false
   } = $props();
 
+  /** @type {HTMLInputElement} */
   let element;
   const elementId = $props.id();
 
@@ -48,6 +62,7 @@
 
   onDestroy(() => {
     if (browser && shortcut && !disabled) {
+      // @ts-ignore
       Mousetrap.unbind(shortcut);
     }
   });
