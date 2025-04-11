@@ -25,6 +25,17 @@
   import Field from './Field.svelte';
   import { untrack } from 'svelte';
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {any} data
+   * @property {boolean} [pin1]
+   * @property {boolean} [pin2]
+   * @property {boolean} [strikeZone]
+   * @property {Camera} camera
+   */
+
+  /** @type {Props} */
   let { data, pin1 = false, pin2 = false, strikeZone = true, camera = $bindable() } = $props();
 
   const OUTFIELD_DISTANCE = 76.2;
@@ -33,7 +44,7 @@
   /**
    * @brief Gets the cubic Bezier curve for the pitch data
    *
-   * @return {CubicBezierCurve3} cubic Bezier curve
+   * @return {CubicBezierCurve3} - cubic Bezier curve
    */
   function getPitchCurve() {
     return new CubicBezierCurve3(...[0, 1, 2, 3].map((i) => new Vector3(...data[`xyz_${i}`])));
