@@ -24,12 +24,25 @@
   import { browser } from '$app/environment';
   import { goto } from '$app/navigation';
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {string} icon - fontawesome icon (e.g. 'fa-house')
+   * @property {string} [smallIcon] - fontawesome icon (e.g. 'fa-house')
+   * @property {string} href
+   * @property {string} [tooltip]
+   * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+   * @property {boolean} [disabled]
+   * @property {string} [cssClass]
+   */
+
+  /** @type {Props} */
   let {
-    icon, // fontawesome icon (e.g. 'fa-house')
-    smallIcon = undefined, // fontawesome icon (e.g. 'fa-house')
+    icon,
+    smallIcon = undefined,
     href,
     tooltip = undefined,
-    shortcut = undefined, // mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+    shortcut = undefined,
     disabled = false,
     cssClass = ''
   } = $props();
@@ -46,6 +59,7 @@
 
   onDestroy(() => {
     if (browser && shortcut && !disabled) {
+      // @ts-ignore
       Mousetrap.unbind(shortcut);
     }
   });
