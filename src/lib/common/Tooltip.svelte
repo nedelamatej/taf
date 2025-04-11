@@ -23,15 +23,23 @@
   import { mount, onDestroy, onMount, unmount } from 'svelte';
   import { browser } from '$app/environment';
 
-  let {
-    value,
-    shortcut = undefined, ///< mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
-    children
-  } = $props();
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {string} [value]
+   * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+   * @property {any} children
+   */
 
+  /** @type {Props} */
+  let { value = undefined, shortcut = undefined, children } = $props();
+
+  /** @type {HTMLSpanElement} */
   let element;
+  /** @type {TooltipInternal} */
   let component;
 
+  /** @type {() => void} */
   let cleanup;
 
   /**
@@ -99,6 +107,7 @@
         ['focus', showTooltip],
         ['blur', hideTooltip]
       ].forEach(([event, listener]) => {
+        // @ts-ignore
         element.addEventListener(event, listener);
       });
     }

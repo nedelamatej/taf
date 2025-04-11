@@ -20,18 +20,27 @@
 
   import Shortcuts from '../js/shortcuts.js';
 
-  let {
-    element = $bindable(),
-    value,
-    shortcut = undefined ///< mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
-  } = $props();
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {string} value
+   * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+   */
+
+  /** @type {Props} */
+  let { value, shortcut = undefined } = $props();
 
   /**
    * @brief Gets the element
+   *
+   * @return {HTMLDivElement} - element
    */
   export function getElement() {
     return element;
   }
+
+  /** @type {HTMLDivElement} */
+  let element;
 </script>
 
 <div
