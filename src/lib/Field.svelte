@@ -23,6 +23,17 @@
   import vertexShader from './shaders/vertex.glsl?raw';
   import fragmentShader from './shaders/fragment.glsl?raw';
 
+  /**
+   * @typedef {Object} Props
+   *
+   * @property {number} OUTFIELD_DISTANCE
+   * @property {number} PITCHING_DISTANCE
+   * @property {any} [pitch0]
+   * @property {any} [pitch1]
+   * @property {any} [pitch2]
+   */
+
+  /** @type {Props} */
   let {
     OUTFIELD_DISTANCE,
     PITCHING_DISTANCE,
