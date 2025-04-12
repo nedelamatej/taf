@@ -91,14 +91,22 @@
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
   }
 
+  /** @type {{ value: string | undefined, shortcut: string | undefined }} */
+  let componentProps = $state({
+    value,
+    shortcut
+  });
+
+  $effect(() => {
+    componentProps.value = value;
+    componentProps.shortcut = shortcut;
+  });
+
   onMount(() => {
     if (value) {
       component = mount(TooltipInternal, {
         target: document.body,
-        props: {
-          value,
-          shortcut
-        }
+        props: componentProps
       });
 
       [

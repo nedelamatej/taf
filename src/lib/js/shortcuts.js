@@ -19,6 +19,17 @@
 
 const Shortcuts = (function () {
   /**
+   * @brief Gets the shortcut for the index
+   *
+   * @param {number} idx - index
+   *
+   * @return {string | undefined} - shortcut
+   */
+  function getIdxShortcut(idx) {
+    return idx < 10 ? `mod+shift+${(idx + 1) % 10}` : undefined;
+  }
+
+  /**
    * @breif Gets the label for the shortcut
    *
    * @param {string} shortcut - shortcut
@@ -43,6 +54,7 @@ const Shortcuts = (function () {
   }
 
   return {
+    getIdxShortcut,
     getLabel
   };
 })();

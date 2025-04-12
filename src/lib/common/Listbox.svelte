@@ -33,6 +33,7 @@
    * @property {Array<{ value: string, label: string, append?: string }>} elements
    * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
    * @property {boolean} [disabled]
+   * @property {boolean} [transparent]
    */
 
   /** @type {Props} */
@@ -41,7 +42,8 @@
     label = undefined,
     elements,
     shortcut = undefined,
-    disabled = false
+    disabled = false,
+    transparent = false
   } = $props();
 
   value = value || elements[0].value;
@@ -77,7 +79,7 @@
   });
 </script>
 
-<div class="relative w-full">
+<div class="_listbox relative w-full">
   {#if label}
     <label for={elementId} class="m-0 mb-1 block text-base font-medium text-neutral-600">
       {label}
@@ -96,7 +98,8 @@
       id={elementId}
       {disabled}
       class="
-        relative w-full cursor-pointer rounded-md border-0 bg-white py-2 pr-8 pl-3 text-left text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 transition-[background,box-shadow] duration-300 outline-none ring-inset hover:bg-neutral-200 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
+        {transparent ? 'bg-transparent' : 'bg-white'}
+        relative w-full cursor-pointer rounded-md border-0 py-2 pr-8 pl-3 text-left text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 transition-[background,box-shadow] duration-300 outline-none ring-inset hover:bg-neutral-200 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
     >
       {elementsInternal.find((element) => element.value === value)?.label || ''}
 

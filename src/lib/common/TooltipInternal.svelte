@@ -23,7 +23,7 @@
   /**
    * @typedef {Object} Props
    *
-   * @property {string} value
+   * @property {string} [value]
    * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
    */
 

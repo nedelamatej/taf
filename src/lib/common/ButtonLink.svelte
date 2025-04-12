@@ -38,6 +38,7 @@
    * @property {boolean} [disabled]
    * @property {'center' | 'start'} [justifyContent]
    * @property {'absolute' | 'static'} [childrenPosition]
+   * @property {boolean} [transparent]
    * @property {string} [cssClass]
    */
 
@@ -54,6 +55,7 @@
     disabled = false,
     justifyContent = 'center',
     childrenPosition = 'absolute',
+    transparent = false,
     cssClass = ''
   } = $props();
 
@@ -83,7 +85,7 @@
     ? `bg-orange-500 text-white ring-orange-500 hover:bg-orange-400 hover:ring-orange-400 focus-visible:outline-orange-500 ${disabled ? '!bg-orange-300 !ring-orange-300' : ''}`
     : ''}
     {secondary
-    ? `bg-white text-neutral-800 ring-neutral-300 hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-orange-500 ${disabled ? '!bg-neutral-100' : ''}`
+    ? `${transparent ? 'bg-transparent' : 'bg-white'} text-neutral-800 ring-neutral-300 hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-orange-500 ${disabled ? '!bg-neutral-100' : ''}`
     : ''}
     {disabled ? '!cursor-not-allowed' : ''}
     justify-{justifyContent} relative inline-flex w-full cursor-pointer items-center gap-x-3 rounded-md border-0 px-3 py-2 text-base shadow-sm ring-1 outline-2 outline-offset-2 outline-transparent transition-[background,box-shadow,color,outline-color] duration-300 ring-inset"
