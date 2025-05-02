@@ -12,16 +12,16 @@
 
 /**
  * @file
- * @brief Pitchers page server-side script
+ * @brief Pitchers (by event) page server-side script
  *
  * @author Matej Nedela
  */
 
 /**
- * @brief Load function for the pitchers page
+ * @brief Load function for the pitchers (by event) page
  */
 export const load = async ({ fetch, params }) => {
-  const pitchersRes = await fetch(`https://tranim.nede.cz/api/pitcher/organization/${params.organizationId}`);
+  const pitchersRes = await fetch(`https://tranim.nede.cz/api/pitcher/event/${params.eventId}`);
   const pitchers = await pitchersRes.json();
 
   const countriesRes = await fetch(`https://tranim.nede.cz/api/country`);

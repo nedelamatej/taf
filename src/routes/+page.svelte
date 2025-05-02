@@ -21,15 +21,13 @@
   import Table from '$lib/common/Table.svelte';
 
   let { data } = $props();
-
-  let organizations = $state(data.organizations);
 </script>
 
 <div class="mx-auto flex max-w-7xl flex-col gap-20 px-10 py-20">
   <h1 class="text-4xl font-bold">Organizations</h1>
 
   <Table
-    bind:data={organizations}
+    data={data.organizations}
     fields={[
       {
         value: 'name',

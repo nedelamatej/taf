@@ -20,7 +20,7 @@
 
   import Table from '$lib/common/Table.svelte';
 
-  let { data } = $props();
+  let { data, pitcherId = 0 } = $props();
 </script>
 
 <Table
@@ -63,7 +63,7 @@
       type: 'buttonLink',
       width: 2,
       primary: true,
-      href: '/pitch/[value.id]/0/1'
+      href: `/pitch/[value.id]/${pitcherId}/1`
     }
   ]}
   csvFields={['id', 'organization', 'name', 'date', 'city', 'country']}
