@@ -32,27 +32,30 @@
     bind:data={pitchers}
     fields={[
       {
-        value: 'firstName',
-        label: 'First name',
-        type: 'input',
-        width: 4
+        value: 'name',
+        label: 'Name',
+        type: 'text',
+        width: 3,
+        cssClass: 'font-bold'
       },
       {
-        value: 'lastName',
-        label: 'Last name',
-        type: 'input',
-        width: 4
+        value: 'date',
+        label: 'Date',
+        type: 'text',
+        width: 2,
+        cssClass: 'font-mono'
+      },
+      {
+        value: 'city',
+        label: 'City',
+        type: 'text',
+        width: 2
       },
       {
         value: 'country',
         label: 'Country',
-        type: 'listbox',
-        width: 2,
-        elements: data.countries.map((/** @type {any} */ country) => ({
-          value: country.id,
-          label: country.name,
-          append: country.code.toUpperCase()
-        }))
+        type: 'text',
+        width: 2
       },
       {
         value: 'Events',
@@ -63,12 +66,11 @@
       {
         value: 'Pitches',
         type: 'buttonLink',
-        width: 1,
+        width: 2,
         primary: true,
         href: '/pitch/0/[value.id]/1'
       }
     ]}
-    defaultValue={{}}
-    csvFields={['id', 'organization', 'firstName', 'lastName', 'date', 'city', 'country']}
+    csvFields={['id', 'organization', 'name', 'date', 'city', 'country']}
   />
 </div>

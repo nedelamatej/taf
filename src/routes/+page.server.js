@@ -21,8 +21,17 @@
  * @brief Load function for the home (organizations) page
  */
 export const load = async ({ fetch }) => {
+  const organizationsRes = await fetch(`https://tranim.nede.cz/api/organization`);
+  const organizations = await organizationsRes.json();
+
+  const countriesRes = await fetch(`https://tranim.nede.cz/api/country`);
+  const countries = await countriesRes.json();
+
+  organizations.forEach((/** @type {any} */ organization) => {
+    organization.country = countries.find((/** @type {any} */ country) => country.id === organization.country).name;
+  })
+
   return {
-    organizations: await (await fetch(`https://tranim.nede.cz/api/organization`)).json(),
-    countries: await (await fetch(`https://tranim.nede.cz/api/country`)).json()
+    organizations: organizations
   };
 };

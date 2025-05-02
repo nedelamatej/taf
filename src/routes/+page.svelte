@@ -34,34 +34,42 @@
       {
         value: 'name',
         label: 'Name',
-        type: 'input',
-        width: 8
+        type: 'text',
+        width: 3,
+        cssClass: 'font-bold'
+      },
+      {
+        value: 'date',
+        label: 'Date',
+        type: 'text',
+        width: 2,
+        cssClass: 'font-mono'
+      },
+      {
+        value: 'city',
+        label: 'City',
+        type: 'text',
+        width: 2
       },
       {
         value: 'country',
         label: 'Country',
-        type: 'listbox',
-        width: 2,
-        elements: data.countries.map((/** @type {any} */ country) => ({
-          value: country.id,
-          label: country.name,
-          append: country.code.toUpperCase()
-        }))
-      },
-      {
-        value: 'Events',
-        type: 'buttonLink',
-        width: 1,
-        href: '/events/[value.id]'
+        type: 'text',
+        width: 2
       },
       {
         value: 'Pitchers',
         type: 'buttonLink',
         width: 1,
         href: '/pitchers/[value.id]'
+      },
+      {
+        value: 'Events',
+        type: 'buttonLink',
+        width: 2,
+        href: '/events/[value.id]'
       }
     ]}
-    defaultValue={{}}
     csvFields={['id', 'name', 'date', 'city', 'country']}
   />
 </div>

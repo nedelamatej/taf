@@ -30,7 +30,7 @@
    *   value: string,
    *   label?: string | undefined,
    *   default?: any | undefined,
-   *   type: 'input' | 'combobox' | 'listbox' | 'button' | 'buttonLink' | 'iconButton' | 'iconButtonLink',
+   *   type: 'text' | 'input' | 'combobox' | 'listbox' | 'button' | 'buttonLink' | 'iconButton' | 'iconButtonLink',
    *   width?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined,
    *   elements?: Array<{ value: string, label: string, append?: string }> | undefined,
    *   customValues?: boolean | undefined,
@@ -44,13 +44,13 @@
    *   href?: string | undefined,
    *   tooltip?: string | undefined,
    *   stopPropagation?: boolean | undefined,
+   *   cssClass?: string | undefined,
    * }>} fields
-   * @property {Object<string, any>} defaultValue
    * @property {Array<string>} csvFields
    */
 
   /** @type {Props} */
-  let { data = $bindable(), fields, defaultValue, csvFields } = $props();
+  let { data = $bindable(), fields, csvFields } = $props();
 
   /** @type {HTMLDivElement} */
   let element;
@@ -93,20 +93,6 @@
   <div class="flex justify-between px-1.5">
     <div class="flex gap-2">
       <IconButton
-        icon="fa-solid fa-circle-plus"
-        onclick={async () => {
-          findBy = '';
-          data = [...data, defaultValue];
-
-          await new Promise((resolve) => setTimeout(resolve, 0));
-
-          [...element.querySelectorAll('.table_row')].at(-1)?.querySelectorAll('input')[0]?.focus();
-        }}
-        tooltip="Add"
-        shortcut="mod+shift+n"
-      />
-
-      <IconButton
         icon={copied ? 'fa-solid fa-check' : 'fa-solid fa-copy'}
         onclick={async () => {
           const csvString = [
@@ -120,7 +106,7 @@
 
           setTimeout(() => (copied = false), 2000);
         }}
-        tooltip={copied ? 'Copied!' : 'Copy to clipboard'}
+        tooltip={copied ? 'Copied!' : 'Copy table to clipboard'}
         shortcut={copied ? undefined : 'mod+c'}
       />
     </div>
@@ -132,8 +118,6 @@
 
   <div class="flex flex-col">
     <div class="flex gap-2 px-1.5">
-      <div class="w-10 shrink-0"></div>
-
       <div class="flex w-full gap-1.5">
         {#each fields as field (field.value)}
           <div
@@ -150,7 +134,7 @@
     <div bind:this={element} class="flex flex-col">
       {#each dataInternal as value, rowIdx (rowIdx)}
         <div class="{rowIdx % 2 ? '' : 'bg-neutral-50'} rounded-xl p-1.5">
-          <TableRow bind:value={data[value._id]} {fields} {rowIdx} onEdit={() => {}} />
+          <TableRow bind:value={data[value._id]} {fields} {rowIdx} />
         </div>
       {:else}
         <div class="bg-neutral-50 rounded-xl p-1.5">

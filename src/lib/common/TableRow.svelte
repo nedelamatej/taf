@@ -36,7 +36,7 @@
    *   value: string,
    *   label?: string | undefined,
    *   default?: any | undefined,
-   *   type: 'input' | 'combobox' | 'listbox' | 'button' | 'buttonLink' | 'iconButton' | 'iconButtonLink',
+   *   type: 'text' | 'input' | 'combobox' | 'listbox' | 'button' | 'buttonLink' | 'iconButton' | 'iconButtonLink',
    *   width?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | undefined,
    *   elements?: Array<{ value: string, label: string, append?: string }> | undefined,
    *   customValues?: boolean | undefined,
@@ -50,13 +50,13 @@
    *   href?: string | undefined,
    *   tooltip?: string | undefined,
    *   stopPropagation?: boolean | undefined,
+   *   cssClass?: string | undefined,
    * }>} fields
    * @property {number} rowIdx
-   * @property {() => void} onEdit
    */
 
   /** @type {Props} */
-  let { value = $bindable(), fields, rowIdx, onEdit } = $props();
+  let { value = $bindable(), fields, rowIdx } = $props();
 
   const flexBasis = {
     1: 'basis-1/12',
@@ -75,16 +75,20 @@
 </script>
 
 <div class="table_row flex gap-2">
-  <IconButton icon="fa-solid fa-pen-to-square" onclick={onEdit} tooltip="Edit" />
-
   <div class="flex w-full gap-1.5">
     {#each fields as field, columnIdx (field.value)}
       <div class={field.width ? flexBasis[field.width] : 'w-10 shrink-0'}>
-        {#if field.type === 'input'}
+        {#if field.type === 'text'}
+          <div class="{field.cssClass} px-3 py-2 text-base text-neutral-800">
+            {value[field.value]}
+          </div>
+        {:else if field.type === 'input'}
           <Input
             bind:value={value[field.value]}
             placeholder={field.placeholder}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             maxlength={field.maxlength}
             uppercase={field.uppercase}
             disabled={field.disabled}
@@ -94,7 +98,9 @@
           <Listbox
             bind:value={value[field.value]}
             elements={field.elements || []}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             disabled={field.disabled}
             transparent={true}
           />
@@ -104,7 +110,9 @@
             elements={field.elements || []}
             customValues={field.customValues}
             placeholder={field.placeholder}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             maxlength={field.maxlength}
             uppercase={field.uppercase}
             disabled={field.disabled}
@@ -117,10 +125,14 @@
             value={field.value}
             onclick={field.onclick || (() => {})}
             icon={field.icon}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             stopPropagation={field.stopPropagation}
             disabled={field.disabled}
+            justifyContent={columnIdx === fields.length - 1 ? 'start' : 'center'}
             transparent={true}
+            cssClass={field.cssClass}
           />
         {:else if field.type === 'buttonLink'}
           <ButtonLink
@@ -131,18 +143,25 @@
               ?.replace('[value.id]', value.id)
               ?.replace('[page.params.id]', page.params.id) ?? ''}
             icon={field.icon}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             disabled={field.disabled}
+            justifyContent={columnIdx === fields.length - 1 ? 'start' : 'center'}
             transparent={true}
+            cssClass={field.cssClass}
           />
         {:else if field.type === 'iconButton'}
           <IconButton
             icon={field.icon ?? ''}
             onclick={field.onclick || (() => {})}
             tooltip={field.tooltip}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             stopPropagation={field.stopPropagation}
             disabled={field.disabled}
+            cssClass={field.cssClass}
           />
         {:else if field.type === 'iconButtonLink'}
           <IconButtonLink
@@ -151,8 +170,11 @@
               ?.replace('[value.id]', value.id)
               ?.replace('[page.params.id]', page.params.id) ?? ''}
             tooltip={field.tooltip}
-            shortcut={columnIdx === 0 ? Shortcuts.getIdxShortcut(rowIdx) : undefined}
+            shortcut={columnIdx === fields.length - 1
+              ? Shortcuts.getIdxShortcut(rowIdx)
+              : undefined}
             disabled={field.disabled}
+            cssClass={field.cssClass}
           />
         {/if}
       </div>

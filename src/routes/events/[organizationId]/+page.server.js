@@ -21,10 +21,17 @@
  * @brief Load function for the events page
  */
 export const load = async ({ fetch, params }) => {
+  const eventsRes = await fetch(`https://tranim.nede.cz/api/event/organization/${params.organizationId}`);
+  const events = await eventsRes.json();
+
+  const countriesRes = await fetch(`https://tranim.nede.cz/api/country`);
+  const countries = await countriesRes.json();
+
+  events.forEach((/** @type {any} */ event) => {
+    event.country = countries.find((/** @type {any} */ country) => country.id === event.country).name;
+  })
+
   return {
-    events: await (
-      await fetch(`https://tranim.nede.cz/api/event/organization/${params.id}`)
-    ).json(),
-    countries: await (await fetch(`https://tranim.nede.cz/api/country`)).json()
+    events: events
   };
 };
