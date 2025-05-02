@@ -59,7 +59,7 @@
   });
 
   onDestroy(() => {
-    if (browser && shortcut && !disabled) {
+    if (browser && shortcut) {
       // @ts-ignore
       Mousetrap.unbind(shortcut);
     }
