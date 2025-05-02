@@ -21,6 +21,12 @@
  * @brief Load function for the pitchers (by event) page
  */
 export const load = async ({ fetch, params }) => {
+  const organizationRes = await fetch(`https://tranim.nede.cz/api/organization/${params.id}`);
+  const organization = await organizationRes.json();
+
+  const eventRes = await fetch(`https://tranim.nede.cz/api/event/${params.eventId}`);
+  const event = await eventRes.json();
+
   const pitchersRes = await fetch(`https://tranim.nede.cz/api/pitcher/event/${params.eventId}`);
   const pitchers = await pitchersRes.json();
 
@@ -33,6 +39,8 @@ export const load = async ({ fetch, params }) => {
   })
 
   return {
+    organization: organization,
+    event: event,
     pitchers: pitchers
   };
 };

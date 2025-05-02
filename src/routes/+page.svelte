@@ -24,7 +24,13 @@
 </script>
 
 <div class="mx-auto flex max-w-7xl flex-col gap-20 px-10 py-20">
-  <h1 class="text-4xl font-bold">Organizations</h1>
+  <div class="flex flex-col gap-2">
+    <nav class="flex items-center gap-2 text-sm text-neutral-400">
+      <a href="/" class="hover:underline">Home</a>
+    </nav>
+
+    <h1 class="text-4xl font-bold">Organizations</h1>
+  </div>
 
   <Table
     data={data.organizations}

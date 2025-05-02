@@ -21,6 +21,9 @@
  * @brief Load function for the events page
  */
 export const load = async ({ fetch, params }) => {
+  const organizationRes = await fetch(`https://tranim.nede.cz/api/organization/${params.id}`);
+  const organization = await organizationRes.json();
+
   const eventsRes = await fetch(`https://tranim.nede.cz/api/event/organization/${params.id}`);
   const events = await eventsRes.json();
 
@@ -32,6 +35,7 @@ export const load = async ({ fetch, params }) => {
   })
 
   return {
+    organization: organization,
     events: events
   };
 };

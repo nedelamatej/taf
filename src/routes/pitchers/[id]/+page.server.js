@@ -21,6 +21,9 @@
  * @brief Load function for the pitchers page
  */
 export const load = async ({ fetch, params }) => {
+  const organizationRes = await fetch(`https://tranim.nede.cz/api/organization/${params.id}`);
+  const organization = await organizationRes.json();
+
   const pitchersRes = await fetch(`https://tranim.nede.cz/api/pitcher/organization/${params.id}`);
   const pitchers = await pitchersRes.json();
 
@@ -33,6 +36,7 @@ export const load = async ({ fetch, params }) => {
   })
 
   return {
+    organization: organization,
     pitchers: pitchers
   };
 };
