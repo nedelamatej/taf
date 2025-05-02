@@ -93,7 +93,7 @@
     {secondary
     ? `${transparent ? 'bg-transparent' : 'bg-white'} text-neutral-800 ring-neutral-300 hover:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-orange-500 disabled:bg-neutral-100`
     : ''}
-    justify-{justifyContent} relative inline-flex w-full cursor-pointer items-center gap-x-3 rounded-md border-0 px-3 py-2 text-base shadow-sm ring-1 outline-2 outline-offset-2 outline-transparent transition-[background,box-shadow,color,outline-color] duration-300 ring-inset disabled:cursor-not-allowed"
+    justify-{justifyContent} relative inline-flex w-full cursor-pointer items-center gap-x-3 rounded-md border-0 px-3 py-2 text-base shadow-sm ring-1 outline-2 outline-offset-2 outline-transparent ring-inset disabled:cursor-not-allowed"
 >
   {#if badge && !primary}
     <span
@@ -103,7 +103,7 @@
         <i class="w-6 {badgeIcon}"></i>
 
         <span
-          class="inline-flex max-w-0 overflow-hidden whitespace-nowrap transition-[max-width] duration-300 group-hover:max-w-[144px]"
+          class="inline-flex max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-[144px]"
         >
           <span class="pl-2">
             {badge}
@@ -126,7 +126,7 @@
       class="
         {primary ? 'bg-orange-400 text-white ring-orange-400' : ''}
         {secondary ? 'bg-white text-neutral-400 ring-neutral-300' : ''}
-        {childrenPosition} inset-y-2 right-3 -mr-1 inline-flex items-center rounded px-1.5 py-0.5 font-sans text-sm font-bold shadow-none ring-1 transition-[background,box-shadow,color] duration-300 ring-inset"
+        {childrenPosition} inset-y-2 right-3 -mr-1 inline-flex items-center rounded px-1.5 py-0.5 font-sans text-sm font-bold shadow-none ring-1 ring-inset"
     >
       <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       {@html Shortcuts.getLabel(shortcut)}

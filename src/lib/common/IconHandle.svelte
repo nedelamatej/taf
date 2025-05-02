@@ -20,7 +20,7 @@
 </script>
 
 <span
-  class="tw-inline-flex tw-h-10 tw-w-10 tw-shrink-0 tw-cursor-move tw-items-center tw-justify-center tw-text-lg tw-text-neutral-600 tw-transition-[color] tw-duration-300 hover:tw-text-neutral-500"
+  class="inline-flex h-10 w-10 shrink-0 cursor-move items-center justify-center text-lg text-neutral-600 hover:text-neutral-500"
 >
   <i class="fa-solid fa-grip-vertical"></i>
 </span>

@@ -71,7 +71,7 @@
     class="
       {cssClass}
       {disabled ? '!cursor-not-allowed !text-orange-300' : ''}
-      relative inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-lg text-orange-500 ring-2 ring-transparent transition-[box-shadow,color] duration-300 outline-none ring-inset hover:text-orange-400 focus-visible:ring-orange-500"
+      relative inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-lg text-orange-500 ring-2 ring-transparent outline-none ring-inset hover:text-orange-400 focus-visible:ring-orange-500"
     data-tooltip={tooltip}
   >
     <i class={icon}></i>

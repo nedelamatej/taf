@@ -74,7 +74,7 @@
     }}
     {disabled}
     type="button"
-    class="{cssClass} relative inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-lg text-orange-500 ring-2 ring-transparent transition-[box-shadow,color] duration-300 outline-none ring-inset hover:text-orange-400 focus-visible:ring-orange-500 disabled:cursor-not-allowed disabled:text-orange-300"
+    class="{cssClass} relative inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-lg text-orange-500 ring-2 ring-transparent outline-none ring-inset hover:text-orange-400 focus-visible:ring-orange-500 disabled:cursor-not-allowed disabled:text-orange-300"
     data-tooltip={tooltip}
   >
     <i class={icon}></i>

@@ -99,7 +99,7 @@
       {disabled}
       class="
         {transparent ? 'bg-transparent' : 'bg-white'}
-        relative w-full cursor-pointer rounded-md border-0 py-2 pr-8 pl-3 text-left text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 transition-[background,box-shadow] duration-300 outline-none ring-inset hover:bg-neutral-200 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
+        relative w-full cursor-pointer rounded-md border-0 py-2 pr-8 pl-3 text-left text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 outline-none ring-inset hover:bg-neutral-200 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
     >
       {elementsInternal.find((element) => element.value === value)?.label || ''}
 

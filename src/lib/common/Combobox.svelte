@@ -120,7 +120,7 @@
       class="
         {uppercase ? 'uppercase' : ''}
         {transparent ? 'bg-transparent' : 'bg-white'}
-        w-full rounded-md border-0 bg-transparent py-2 pr-8 pl-3 text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 transition-[background,box-shadow] duration-300 outline-none ring-inset placeholder:text-neutral-400 placeholder:opacity-100 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
+        w-full rounded-md border-0 bg-transparent py-2 pr-8 pl-3 text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 outline-none ring-inset placeholder:text-neutral-400 placeholder:opacity-100 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
     />
 
     {#if shortcut && !disabled}
