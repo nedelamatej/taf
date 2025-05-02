@@ -23,20 +23,19 @@
   import Pitch from './Pitch.svelte';
   import StrikeZone from './StrikeZone.svelte';
   import Field from './Field.svelte';
-  import { untrack } from 'svelte';
 
   /**
    * @typedef {Object} Props
    *
-   * @property {any} data
-   * @property {boolean} [pin1]
-   * @property {boolean} [pin2]
+   * @property {any} data0
+   * @property {any} data1
+   * @property {any} data2
    * @property {boolean} [strikeZone]
    * @property {Camera} camera
    */
 
   /** @type {Props} */
-  let { data, pin1 = false, pin2 = false, strikeZone = true, camera = $bindable() } = $props();
+  let { data0, data1, data2, strikeZone = true, camera = $bindable() } = $props();
 
   const OUTFIELD_DISTANCE = 76.2;
   const PITCHING_DISTANCE = 14.02;
@@ -44,15 +43,17 @@
   /**
    * @brief Gets the cubic Bezier curve for the pitch data
    *
+   * @param {any} data - pitch data
+   *
    * @return {CubicBezierCurve3} - cubic Bezier curve
    */
-  function getPitchCurve() {
+  function getPitchCurve(data) {
     return new CubicBezierCurve3(...[0, 1, 2, 3].map((i) => new Vector3(...data[`xyz_${i}`])));
   }
 
-  let pitch0 = $derived(getPitchCurve());
-  let pitch1 = $derived(pin1 ? untrack(getPitchCurve) : undefined);
-  let pitch2 = $derived(pin2 ? untrack(getPitchCurve) : undefined);
+  let pitch0 = $derived(getPitchCurve(data0));
+  let pitch1 = $derived(data1 ? getPitchCurve(data1) : undefined);
+  let pitch2 = $derived(data2 ? getPitchCurve(data2) : undefined);
 </script>
 
 <Camera bind:this={camera} {PITCHING_DISTANCE} />
