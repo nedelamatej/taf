@@ -21,12 +21,17 @@
  * @brief Load function for the pitch page
  */
 export const load = async ({ fetch, params }) => {
+  const pitchRes = await fetch(
+    `https://tranim.nede.cz/api/pitch/${params.eventId}/${params.pitcherId}/${params.idx}`
+  );
+
+  const pitch = await pitchRes.json();
+
+  const typesRes = await fetch(`https://tranim.nede.cz/api/type`);
+  const types = await typesRes.json();
+
   return {
-    pitch: await (
-      await fetch(
-        `https://tranim.nede.cz/api/pitch/${params.eventId}/${params.pitcherId}/${params.idx}`
-      )
-    ).json(),
-    types: await (await fetch(`https://tranim.nede.cz/api/type`)).json()
+    pitch: pitch,
+    types: types
   };
 };

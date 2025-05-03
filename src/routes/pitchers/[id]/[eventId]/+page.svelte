@@ -42,7 +42,14 @@
       </a>
     </nav>
 
-    <h1 class="text-4xl font-bold">Pitchers</h1>
+    <h1 class="text-4xl font-bold">
+      Pitchers
+      <span class="font-normal">
+        &mdash;
+
+        {data.event.name}
+      </span>
+    </h1>
   </div>
 
   <PitchersTable data={data.pitchers} eventId={data.event.id} />

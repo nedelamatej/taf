@@ -43,7 +43,15 @@
       </a>
     </nav>
 
-    <h1 class="text-4xl font-bold">Events</h1>
+    <h1 class="text-4xl font-bold">
+      Events
+      <span class="font-normal">
+        &mdash;
+
+        {data.pitcher.lastName.toUpperCase()}
+        {data.pitcher.firstName}
+      </span>
+    </h1>
   </div>
 
   <EventsTable data={data.events} pitcherId={data.pitcher.id} />

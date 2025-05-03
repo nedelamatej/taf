@@ -28,8 +28,10 @@ export const load = async ({ fetch }) => {
   const countries = await countriesRes.json();
 
   organizations.forEach((/** @type {any} */ organization) => {
-    organization.country = countries.find((/** @type {any} */ country) => country.id === organization.country).name;
-  })
+    organization.country = countries.find(
+      (/** @type {any} */ country) => country.id === organization.country
+    ).name;
+  });
 
   return {
     organizations: organizations

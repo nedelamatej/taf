@@ -32,8 +32,10 @@ export const load = async ({ fetch, params }) => {
 
   pitchers.forEach((/** @type {any} */ pitcher) => {
     pitcher.name = pitcher.lastName.toUpperCase() + ' ' + pitcher.firstName;
-    pitcher.country = countries.find((/** @type {any} */ country) => country.id === pitcher.country).name;
-  })
+    pitcher.country = countries.find(
+      (/** @type {any} */ country) => country.id === pitcher.country
+    ).name;
+  });
 
   return {
     organization: organization,

@@ -48,7 +48,7 @@
   });
 </script>
 
-<div class="flex w-[calc((100%-24px)/4)] flex-col gap-2 rounded-lg bg-orange-100/42 px-3 py-2">
+<div class="flex w-[calc((100%-36px)/4)] flex-col gap-2 rounded-lg bg-orange-100/42 px-3 py-2">
   <div class="flex justify-center text-xs font-light tracking-widest text-orange-500 uppercase">
     Pitch details
   </div>

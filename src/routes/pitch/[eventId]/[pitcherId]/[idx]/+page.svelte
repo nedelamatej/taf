@@ -21,6 +21,8 @@
   import { Canvas } from '@threlte/core';
   import IconButtonLink from '$lib/common/IconButtonLink.svelte';
   import IconButton from '$lib/common/IconButton.svelte';
+  import PitchBox from '$lib/components/PitchBox.svelte';
+  import ValueBox from '$lib/components/ValueBox.svelte';
   import Scene from '$lib/Scene.svelte';
   import ButtonLink from '$lib/common/ButtonLink.svelte';
   import Button from '$lib/common/Button.svelte';
@@ -40,6 +42,53 @@
   let pitch2 = $derived(pin2 ? untrack(() => pitch) : null);
 
   let camera = $state();
+
+  /**
+   * @brief Gets velocity in kilometers per hour
+   *
+   * @param {number} v - velocity in meters per second
+   *
+   * @return {string} velocity in kilometers per hour
+   */
+  function getVelocity(v) {
+    return (v * 3.6).toFixed(1);
+  }
+
+  /**
+   * @brief Gets rotation count
+   *
+   * @param {number} omega - angular velocity in radians per second
+   * @param {number} t - flight duration in seconds
+   *
+   * @return {string} rotation count
+   */
+  function getCount(omega, t) {
+    return ((omega / (2 * Math.PI)) * t).toFixed(2);
+  }
+
+  /**
+   * @brief Gets rotation tilt in hours and minutes
+   *
+   * @param {number} alpha - rotation angle in radians
+   *
+   * @return {string} rotation tilt in hours and minutes
+   */
+  function getTilt(alpha) {
+    let time = Math.round((((alpha / (2 * Math.PI)) * 12) % 12) * 4) / 4 || 12;
+
+    return `${Math.floor(time)}:${Math.round((time % 1) * 60) || '00'}`;
+  }
+
+  /**
+   * @brief Gets angle in degrees
+   *
+   * @param {number} angle - angle in radians
+   *
+   * @return {string} angle in degrees
+   */
+  function getAngle(angle) {
+    return Math.abs((angle * 180) / Math.PI).toFixed(0);
+  }
 
   let copied = $state(false);
 </script>
@@ -78,7 +127,7 @@
         />
       {/key}
 
-      <span class="font-mono">
+      <span class="tabular-nums">
         {String(pitch.idx).padStart(3, '0')} / {String(pitch.cnt).padStart(3, '0')}
       </span>
 
@@ -123,6 +172,60 @@
     <Canvas>
       <Scene bind:camera data0={pitch} data1={pitch1} data2={pitch2} {strikeZone} />
     </Canvas>
+
+    <div class="absolute top-0 left-0 flex h-53 w-full flex-col flex-wrap gap-3 p-3">
+      <PitchBox {pitch} {pitch1} {pitch2} />
+
+      <ValueBox
+        label="Initial velocity [km/h]"
+        value={getVelocity(pitch.v_0)}
+        value1={pitch1 ? getVelocity(pitch1.v_0) : undefined}
+        value2={pitch2 ? getVelocity(pitch2.v_0) : undefined}
+      />
+
+      <ValueBox
+        label="Final velocity [km/h]"
+        value={getVelocity(pitch.v_t)}
+        value1={pitch1 ? getVelocity(pitch1.v_t) : undefined}
+        value2={pitch2 ? getVelocity(pitch2.v_t) : undefined}
+      />
+
+      <ValueBox
+        label="Rotation count"
+        value={getCount(pitch.omega, pitch.t)}
+        value1={pitch1 ? getCount(pitch1.omega, pitch1.t) : undefined}
+        value2={pitch2 ? getCount(pitch2.omega, pitch2.t) : undefined}
+      />
+
+      <ValueBox
+        label="Rotation tilt"
+        value={getTilt(pitch.alpha)}
+        value1={pitch1 ? getTilt(pitch1.alpha) : undefined}
+        value2={pitch2 ? getTilt(pitch2.alpha) : undefined}
+      />
+
+      <ValueBox
+        label="Horizontal angle [deg]"
+        value={`${getAngle(pitch.phi_0 - Math.PI / 2)}&deg; ${pitch.phi_0 > Math.PI / 2 ? 'R' : 'L'}`}
+        value1={pitch1
+          ? `${getAngle(pitch1.phi_0 - Math.PI / 2)}&deg; ${pitch1.phi_0 > Math.PI / 2 ? 'R' : 'L'}`
+          : undefined}
+        value2={pitch2
+          ? `${getAngle(pitch2.phi_0 - Math.PI / 2)}&deg; ${pitch2.phi_0 > Math.PI / 2 ? 'R' : 'L'}`
+          : undefined}
+      />
+
+      <ValueBox
+        label="Vertical angle [deg]"
+        value={`${getAngle(Math.PI - pitch.theta_0)}&deg; ${pitch.theta_0 < Math.PI ? 'U' : 'D'}`}
+        value1={pitch1
+          ? `${getAngle(Math.PI - pitch1.theta_0)}&deg; ${pitch1.theta_0 < Math.PI ? 'U' : 'D'}`
+          : undefined}
+        value2={pitch2
+          ? `${getAngle(Math.PI - pitch2.theta_0)}&deg; ${pitch2.theta_0 < Math.PI ? 'U' : 'D'}`
+          : undefined}
+      />
+    </div>
 
     <div class="absolute right-0 bottom-0 flex w-28 flex-wrap gap-2 px-3 py-2">
       <IconButton
