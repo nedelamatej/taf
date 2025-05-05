@@ -1,5 +1,7 @@
 # Tranim App Frontend (TAF)
 
+[![Screenshot][screenshot]](https://tranim.cz)
+
 ## About The Project
 
 Frontend part of softball pitch trajectories modeling and analysis application.
@@ -110,6 +112,7 @@ This project is part of a bachelor's thesis:
 [![Email][email]][email-url]\
 [![GitHub][github]][github-url]
 
+[screenshot]: screenshot.png
 [svelte]: https://img.shields.io/badge/svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white
 [svelte-url]: https://svelte.dev/
 [javascript]: https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black

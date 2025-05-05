@@ -2,9 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2025-05-05
+
+### Fixed
+
+- Fixed aliasing artifact in `fragment` shader.
+
 ## [0.1.0] - 2025-05-05
 
-## Added
+### Added
 
 - Added initial set of files.
 - Added configuration files (`workspace` and `editorconfig`).
