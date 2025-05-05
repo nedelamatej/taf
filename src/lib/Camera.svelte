@@ -103,7 +103,16 @@
   const camera = new PerspectiveCamera();
   const controls = new CameraControls(camera, dom);
 
+  controls.minDistance = 1.5;
+  controls.maxDistance = 18.29;
   controls.maxPolarAngle = Math.PI / 2;
+
+  controls.setBoundary(
+    new Box3(
+      new Vector3(PITCHING_DISTANCE / 2, 0.75, 0),
+      new Vector3(PITCHING_DISTANCE / 2, 0.75, 0)
+    )
+  );
 
   controls.setTarget(PITCHING_DISTANCE / 2, 0.75, 0);
   controls.setPosition(-1.5, 1.5, 0.75);
