@@ -159,6 +159,12 @@ float sdfPolygon(in vec2 p, in vec2[5] v) {
  * @brief Fragment shader main function
  */
 void main() {
+  vec3[3] vPositions = vec3[3](
+    vPosition - dFdx(vPosition),
+    vPosition - dFdy(vPosition),
+    vPosition
+  );
+
   // outfield fence
   if (sdfCircle(vPosition.xz, vec2(0.0, 0.0), OUTFIELD_DISTANCE) > 0.0) {
     discard;
@@ -221,96 +227,65 @@ void main() {
     return;
   }
 
-  // grass line
-  if (abs(sdfCircle(vPosition.xz, vec2(18.29 / sqrt(2.0), 0.0), 18.29)) < 0.05 && vPosition.x > abs(vPosition.z)) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
+  float d = OUTFIELD_DISTANCE, f = 0.0;
+
+  for (int i = 0; i < 3; ++i) {
+    d = OUTFIELD_DISTANCE;
+
+    // grass line
+    if (vPositions[i].x > abs(vPositions[i].z)) {
+      d = min(d, abs(sdfCircle(vPositions[i].xz, vec2(18.29 / sqrt(2.0), 0.0), 18.29)));
+    }
+
+    // pitcher's circle
+    d = min(d, abs(sdfCircle(vPositions[i].xz, vec2(PITCHING_DISTANCE, 0.0), 2.44)));
+
+    // right foul line
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(1.28, 1.28), vec2(OUTFIELD_DISTANCE / sqrt(2.0), OUTFIELD_DISTANCE / sqrt(2.0))));
+
+    // left foul line
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(1.28, -1.28), vec2(OUTFIELD_DISTANCE / sqrt(2.0), -OUTFIELD_DISTANCE / sqrt(2.0))));
+
+    // right base line
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(18.29 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)));
+
+    // left base line
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(18.29 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)));
+
+    // right batter's box
+    d = min(d, abs(sdfBox(vPositions[i].xz, vec2(-0.694, 0.37), vec2(1.436, 1.28))));
+
+    // left batter's box
+    d = min(d, abs(sdfBox(vPositions[i].xz, vec2(-0.694, -0.37), vec2(1.436, -1.28))));
+
+    // catcher's box
+    if (vPositions[i].x < abs(vPositions[i].z) - 1.974) {
+      d = min(d, abs(sdfBox(vPositions[i].xz, vec2(-3.744, -1.28), vec2(-0.694, 1.28))));
+    }
+
+    // one meter line
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(9.145 / sqrt(2.0), 9.145 / sqrt(2.0)), vec2(8.235 / sqrt(2.0), 10.055 / sqrt(2.0))));
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(8.235 / sqrt(2.0), 10.055 / sqrt(2.0)), vec2(17.38 / sqrt(2.0), 19.2 / sqrt(2.0))));
+
+    // right coach's box
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(9.15 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(10.06 / sqrt(2.0), 17.38 / sqrt(2.0))));
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(10.06 / sqrt(2.0), 17.38 / sqrt(2.0)), vec2(14.63 / sqrt(2.0), 21.95 / sqrt(2.0))));
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(14.63 / sqrt(2.0), 21.95 / sqrt(2.0)), vec2(13.72 / sqrt(2.0), 22.86 / sqrt(2.0))));
+
+    // left coach's box
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(9.15 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(10.06 / sqrt(2.0), -17.38 / sqrt(2.0))));
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(10.06 / sqrt(2.0), -17.38 / sqrt(2.0)), vec2(14.63 / sqrt(2.0), -21.95 / sqrt(2.0))));
+    d = min(d, sdfSegment(vPositions[i].xz, vec2(14.63 / sqrt(2.0), -21.95 / sqrt(2.0)), vec2(13.72 / sqrt(2.0), -22.86 / sqrt(2.0))));
+
+    f = max(f, fwidth(d));
   }
 
-  // pitcher's circle
-  if (abs(sdfCircle(vPosition.xz, vec2(PITCHING_DISTANCE, 0.0), 2.44)) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // right foul line
-  if (sdfSegment(vPosition.xz, vec2(1.28, 1.28), vec2(OUTFIELD_DISTANCE / sqrt(2.0), OUTFIELD_DISTANCE / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // left foul line
-  if (sdfSegment(vPosition.xz, vec2(1.28, -1.28), vec2(OUTFIELD_DISTANCE / sqrt(2.0), -OUTFIELD_DISTANCE / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // right base line
-  if (sdfSegment(vPosition.xz, vec2(18.29 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // left base line
-  if (sdfSegment(vPosition.xz, vec2(18.29 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(36.58 / sqrt(2.0), 0.0)) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // right batter's box
-  if (abs(sdfBox(vPosition.xz, vec2(-0.694, 0.37), vec2(1.436, 1.28))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // left batter's box
-  if (abs(sdfBox(vPosition.xz, vec2(-0.694, -0.37), vec2(1.436, -1.28))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // catcher's box
-  if (abs(sdfBox(vPosition.xz, vec2(-3.744, -1.28), vec2(-0.694, 1.28))) < 0.05 && vPosition.x < abs(vPosition.z) - 1.974) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // one meter line
-  if (sdfSegment(vPosition.xz, vec2(9.145 / sqrt(2.0), 9.145 / sqrt(2.0)), vec2(8.235 / sqrt(2.0), 10.055 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  } else if (sdfSegment(vPosition.xz, vec2(8.235 / sqrt(2.0), 10.055 / sqrt(2.0)), vec2(17.38 / sqrt(2.0), 19.2 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // right coach's box
-  if (sdfSegment(vPosition.xz, vec2(9.15 / sqrt(2.0), 18.29 / sqrt(2.0)), vec2(10.06 / sqrt(2.0), 17.38 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  } else if (sdfSegment(vPosition.xz, vec2(10.06 / sqrt(2.0), 17.38 / sqrt(2.0)), vec2(14.63 / sqrt(2.0), 21.95 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  } else if (sdfSegment(vPosition.xz, vec2(14.63 / sqrt(2.0), 21.95 / sqrt(2.0)), vec2(13.72 / sqrt(2.0), 22.86 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
-
-  // left coach's box
-  if (sdfSegment(vPosition.xz, vec2(9.15 / sqrt(2.0), -18.29 / sqrt(2.0)), vec2(10.06 / sqrt(2.0), -17.38 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  } else if (sdfSegment(vPosition.xz, vec2(10.06 / sqrt(2.0), -17.38 / sqrt(2.0)), vec2(14.63 / sqrt(2.0), -21.95 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  } else if (sdfSegment(vPosition.xz, vec2(14.63 / sqrt(2.0), -21.95 / sqrt(2.0)), vec2(13.72 / sqrt(2.0), -22.86 / sqrt(2.0))) < 0.05) {
-    gl_FragColor = vec4(0.26, 0.26, 0.26, 1.0);
-    return;
-  }
+  float w = max(0.05, f);
+  float c = mix(0.26, 0.93, smoothstep(w, w + f, abs(d)));
 
   // bounding box
   if (vPosition.x > PITCHING_DISTANCE || vPosition.x < -0.694 || abs(vPosition.z) > 1.28) {
-    gl_FragColor = vec4(0.93, 0.93, 0.93, 1.0);
+    gl_FragColor = vec4(c, c, c, 1.0);
     return;
   }
 
@@ -325,9 +300,9 @@ void main() {
     if (enabled[2]) pitch2Shadow = min(pitch2Shadow, sdfSegment(vPosition.xz, pitch2[i].xz, pitch2[i + 1].xz));
   }
 
-  float r = (mix(0.93, 0.78, smoothstep(0.1, 0.0, pitch0Shadow)) + mix(0.93, 0.18, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(0.93, 0.08, smoothstep(0.1, 0.0, pitch2Shadow))) / 3.0;
-  float g = (mix(0.93, 0.16, smoothstep(0.1, 0.0, pitch0Shadow)) + mix(0.93, 0.49, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(0.93, 0.40, smoothstep(0.1, 0.0, pitch2Shadow))) / 3.0;
-  float b = (mix(0.93, 0.16, smoothstep(0.1, 0.0, pitch0Shadow)) + mix(0.93, 0.20, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(0.93, 0.75, smoothstep(0.1, 0.0, pitch2Shadow))) / 3.0;
+  float r = (mix(c, 0.78, smoothstep(0.1, 0.0, pitch0Shadow)) + mix(c, 0.18, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(c, 0.08, smoothstep(0.1, 0.0, pitch2Shadow))) / 3.0;
+  float g = (mix(c, 0.16, smoothstep(0.1, 0.0, pitch0Shadow)) + mix(c, 0.49, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(c, 0.40, smoothstep(0.1, 0.0, pitch2Shadow))) / 3.0;
+  float b = (mix(c, 0.16, smoothstep(0.1, 0.0, pitch0Shadow)) + mix(c, 0.20, smoothstep(0.1, 0.0, pitch1Shadow)) + mix(c, 0.75, smoothstep(0.1, 0.0, pitch2Shadow))) / 3.0;
 
   gl_FragColor = vec4(r, g, b, 1.0);
 }
