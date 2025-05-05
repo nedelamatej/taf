@@ -98,73 +98,75 @@
     <div class="h-1 bg-orange-500" style="width: {(pitch.idx / pitch.cnt) * 100}%;"></div>
   </div>
 
-  <div class="flex justify-between bg-orange-50 px-3 py-2">
-    <div class="flex w-34 gap-2">
-      <IconButtonLink icon="fa-solid fa-house" href="/" tooltip="Home" />
+  <div class="bg-orange-50 px-3 py-2">
+    <div class="mx-auto flex max-w-[1440px] justify-between">
+      <div class="flex w-34 gap-2">
+        <IconButtonLink icon="fa-solid fa-house" href="/" tooltip="Home" />
 
-      <IconButton
-        icon={copied ? 'fa-solid fa-check' : 'fa-solid fa-link'}
-        onclick={async () => {
-          navigator.clipboard.writeText(window.location.href);
+        <IconButton
+          icon={copied ? 'fa-solid fa-check' : 'fa-solid fa-link'}
+          onclick={async () => {
+            navigator.clipboard.writeText(window.location.href);
 
-          copied = true;
+            copied = true;
 
-          setTimeout(() => (copied = false), 2000);
-        }}
-        tooltip={copied ? 'Copied!' : 'Copy link to clipboard'}
-        shortcut={copied ? undefined : 'mod+c'}
-      />
-    </div>
-
-    <div class="flex items-center gap-2">
-      {#key pitch.idx}
-        <IconButtonLink
-          icon="fa-solid fa-chevron-left"
-          href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) - 1}`}
-          tooltip="Previous pitch"
-          shortcut="left"
-          disabled={pitch.idx === 1}
+            setTimeout(() => (copied = false), 2000);
+          }}
+          tooltip={copied ? 'Copied!' : 'Copy link to clipboard'}
+          shortcut={copied ? undefined : 'mod+c'}
         />
-      {/key}
+      </div>
 
-      <span class="tabular-nums">
-        {String(pitch.idx).padStart(3, '0')} / {String(pitch.cnt).padStart(3, '0')}
-      </span>
+      <div class="flex items-center gap-2">
+        {#key pitch.idx}
+          <IconButtonLink
+            icon="fa-solid fa-chevron-left"
+            href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) - 1}`}
+            tooltip="Previous pitch"
+            shortcut="left"
+            disabled={pitch.idx === 1}
+          />
+        {/key}
 
-      {#key pitch.idx}
-        <IconButtonLink
-          icon="fa-solid fa-chevron-right"
-          href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) + 1}`}
-          tooltip="Next pitch"
-          shortcut="right"
-          disabled={pitch.idx === pitch.cnt}
+        <span class="tabular-nums">
+          {String(pitch.idx).padStart(3, '0')} / {String(pitch.cnt).padStart(3, '0')}
+        </span>
+
+        {#key pitch.idx}
+          <IconButtonLink
+            icon="fa-solid fa-chevron-right"
+            href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) + 1}`}
+            tooltip="Next pitch"
+            shortcut="right"
+            disabled={pitch.idx === pitch.cnt}
+          />
+        {/key}
+      </div>
+
+      <div class="flex w-34 gap-2">
+        <IconButton
+          icon="fa-regular fa-expand"
+          onclick={() => (strikeZone = !strikeZone)}
+          tooltip="Show strike zone"
+          shortcut="z"
         />
-      {/key}
-    </div>
 
-    <div class="flex w-34 gap-2">
-      <IconButton
-        icon="fa-regular fa-expand"
-        onclick={() => (strikeZone = !strikeZone)}
-        tooltip="Show strike zone"
-        shortcut="z"
-      />
+        <IconButton
+          icon="fa-solid {pin1 ? 'fa-thumbtack-slash' : 'fa-thumbtack'}"
+          smallIcon="fa-solid fa-1"
+          onclick={() => (pin1 = !pin1)}
+          tooltip="Pin to 1st position"
+          shortcut="1"
+        />
 
-      <IconButton
-        icon="fa-solid {pin1 ? 'fa-thumbtack-slash' : 'fa-thumbtack'}"
-        smallIcon="fa-solid fa-1"
-        onclick={() => (pin1 = !pin1)}
-        tooltip="Pin to 1st position"
-        shortcut="1"
-      />
-
-      <IconButton
-        icon="fa-solid {pin2 ? 'fa-thumbtack-slash' : 'fa-thumbtack'}"
-        smallIcon="fa-solid fa-2"
-        onclick={() => (pin2 = !pin2)}
-        tooltip="Pin to 2nd position"
-        shortcut="2"
-      />
+        <IconButton
+          icon="fa-solid {pin2 ? 'fa-thumbtack-slash' : 'fa-thumbtack'}"
+          smallIcon="fa-solid fa-2"
+          onclick={() => (pin2 = !pin2)}
+          tooltip="Pin to 2nd position"
+          shortcut="2"
+        />
+      </div>
     </div>
   </div>
 
@@ -173,58 +175,60 @@
       <Scene bind:camera data0={pitch} data1={pitch1} data2={pitch2} {strikeZone} />
     </Canvas>
 
-    <div class="absolute top-0 left-0 flex h-53 w-full flex-col flex-wrap gap-3 p-3">
-      <PitchBox {pitch} {pitch1} {pitch2} />
+    <div class="absolute top-0 left-0 w-full p-3">
+      <div class="mx-auto flex h-53 max-w-[1440px] flex-col flex-wrap gap-3">
+        <PitchBox {pitch} {pitch1} {pitch2} />
 
-      <ValueBox
-        label="Initial velocity [km/h]"
-        value={getVelocity(pitch.v_0)}
-        value1={pitch1 ? getVelocity(pitch1.v_0) : undefined}
-        value2={pitch2 ? getVelocity(pitch2.v_0) : undefined}
-      />
+        <ValueBox
+          label="Initial velocity [km/h]"
+          value={getVelocity(pitch.v_0)}
+          value1={pitch1 ? getVelocity(pitch1.v_0) : undefined}
+          value2={pitch2 ? getVelocity(pitch2.v_0) : undefined}
+        />
 
-      <ValueBox
-        label="Final velocity [km/h]"
-        value={getVelocity(pitch.v_t)}
-        value1={pitch1 ? getVelocity(pitch1.v_t) : undefined}
-        value2={pitch2 ? getVelocity(pitch2.v_t) : undefined}
-      />
+        <ValueBox
+          label="Final velocity [km/h]"
+          value={getVelocity(pitch.v_t)}
+          value1={pitch1 ? getVelocity(pitch1.v_t) : undefined}
+          value2={pitch2 ? getVelocity(pitch2.v_t) : undefined}
+        />
 
-      <ValueBox
-        label="Rotation count"
-        value={getCount(pitch.omega, pitch.t)}
-        value1={pitch1 ? getCount(pitch1.omega, pitch1.t) : undefined}
-        value2={pitch2 ? getCount(pitch2.omega, pitch2.t) : undefined}
-      />
+        <ValueBox
+          label="Rotation count"
+          value={getCount(pitch.omega, pitch.t)}
+          value1={pitch1 ? getCount(pitch1.omega, pitch1.t) : undefined}
+          value2={pitch2 ? getCount(pitch2.omega, pitch2.t) : undefined}
+        />
 
-      <ValueBox
-        label="Rotation tilt"
-        value={getTilt(pitch.alpha)}
-        value1={pitch1 ? getTilt(pitch1.alpha) : undefined}
-        value2={pitch2 ? getTilt(pitch2.alpha) : undefined}
-      />
+        <ValueBox
+          label="Rotation tilt"
+          value={getTilt(pitch.alpha)}
+          value1={pitch1 ? getTilt(pitch1.alpha) : undefined}
+          value2={pitch2 ? getTilt(pitch2.alpha) : undefined}
+        />
 
-      <ValueBox
-        label="Horizontal angle [deg]"
-        value={`${getAngle(pitch.phi_0 - Math.PI / 2)}&deg; ${pitch.phi_0 > Math.PI / 2 ? 'R' : 'L'}`}
-        value1={pitch1
-          ? `${getAngle(pitch1.phi_0 - Math.PI / 2)}&deg; ${pitch1.phi_0 > Math.PI / 2 ? 'R' : 'L'}`
-          : undefined}
-        value2={pitch2
-          ? `${getAngle(pitch2.phi_0 - Math.PI / 2)}&deg; ${pitch2.phi_0 > Math.PI / 2 ? 'R' : 'L'}`
-          : undefined}
-      />
+        <ValueBox
+          label="Horizontal angle [deg]"
+          value={`${getAngle(pitch.phi_0 - Math.PI / 2)}&deg; ${pitch.phi_0 > Math.PI / 2 ? 'R' : 'L'}`}
+          value1={pitch1
+            ? `${getAngle(pitch1.phi_0 - Math.PI / 2)}&deg; ${pitch1.phi_0 > Math.PI / 2 ? 'R' : 'L'}`
+            : undefined}
+          value2={pitch2
+            ? `${getAngle(pitch2.phi_0 - Math.PI / 2)}&deg; ${pitch2.phi_0 > Math.PI / 2 ? 'R' : 'L'}`
+            : undefined}
+        />
 
-      <ValueBox
-        label="Vertical angle [deg]"
-        value={`${getAngle(Math.PI - pitch.theta_0)}&deg; ${pitch.theta_0 < Math.PI ? 'U' : 'D'}`}
-        value1={pitch1
-          ? `${getAngle(Math.PI - pitch1.theta_0)}&deg; ${pitch1.theta_0 < Math.PI ? 'U' : 'D'}`
-          : undefined}
-        value2={pitch2
-          ? `${getAngle(Math.PI - pitch2.theta_0)}&deg; ${pitch2.theta_0 < Math.PI ? 'U' : 'D'}`
-          : undefined}
-      />
+        <ValueBox
+          label="Vertical angle [deg]"
+          value={`${getAngle(Math.PI - pitch.theta_0)}&deg; ${pitch.theta_0 < Math.PI ? 'U' : 'D'}`}
+          value1={pitch1
+            ? `${getAngle(Math.PI - pitch1.theta_0)}&deg; ${pitch1.theta_0 < Math.PI ? 'U' : 'D'}`
+            : undefined}
+          value2={pitch2
+            ? `${getAngle(Math.PI - pitch2.theta_0)}&deg; ${pitch2.theta_0 < Math.PI ? 'U' : 'D'}`
+            : undefined}
+        />
+      </div>
     </div>
 
     <div class="absolute right-0 bottom-0 flex w-28 flex-wrap gap-2 px-3 py-2">
@@ -274,42 +278,44 @@
     </div>
   </div>
 
-  <div class="flex justify-between bg-orange-50 px-3 py-2 shadow-lg">
-    <ButtonLink
-      secondary
-      value="Previous"
-      href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) - 1}`}
-      disabled={pitch.idx === 1}
-      cssClass="!w-22"
-    />
+  <div class="bg-orange-50 px-3 py-2">
+    <div class="mx-auto flex max-w-[1440px] justify-between">
+      <ButtonLink
+        secondary
+        value="Previous"
+        href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) - 1}`}
+        disabled={pitch.idx === 1}
+        cssClass="!w-22"
+      />
 
-    <div class="flex gap-2">
-      {#each data.types as type, idx (type.id)}
-        <Button
-          primary={pitchType === type.id}
-          secondary={pitchType !== type.id}
-          value={type.name}
-          onclick={async () => {
-            pitchType = pitchType !== type.id ? type.id : null;
+      <div class="flex gap-2">
+        {#each data.types as type, idx (type.id)}
+          <Button
+            primary={pitchType === type.id}
+            secondary={pitchType !== type.id}
+            value={type.name}
+            onclick={async () => {
+              pitchType = pitchType !== type.id ? type.id : null;
 
-            await fetch(`https://tranim.nede.cz/api/pitch/${pitch.id}`, {
-              method: 'PUT',
-              body: JSON.stringify({ type: pitchType })
-            });
-          }}
-          shortcut={String((idx + 3) % 10)}
-          justifyContent="start"
-          cssClass="!w-34"
-        />
-      {/each}
+              await fetch(`https://tranim.nede.cz/api/pitch/${pitch.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ type: pitchType })
+              });
+            }}
+            shortcut={String((idx + 3) % 10)}
+            justifyContent="start"
+            cssClass="!w-34"
+          />
+        {/each}
+      </div>
+
+      <ButtonLink
+        secondary
+        value="Next"
+        href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) + 1}`}
+        disabled={pitch.idx === pitch.cnt}
+        cssClass="!w-22"
+      />
     </div>
-
-    <ButtonLink
-      secondary
-      value="Next"
-      href={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${Number(page.params.idx) + 1}`}
-      disabled={pitch.idx === pitch.cnt}
-      cssClass="!w-22"
-    />
   </div>
 </div>
