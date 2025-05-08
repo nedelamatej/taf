@@ -21,12 +21,14 @@
   import { Canvas } from '@threlte/core';
   import IconButtonLink from '$lib/common/IconButtonLink.svelte';
   import IconButton from '$lib/common/IconButton.svelte';
+  import Input from '$lib/common/Input.svelte';
   import PitchBox from '$lib/components/PitchBox.svelte';
   import ValueBox from '$lib/components/ValueBox.svelte';
   import Scene from '$lib/Scene.svelte';
   import ButtonLink from '$lib/common/ButtonLink.svelte';
   import Button from '$lib/common/Button.svelte';
   import { untrack } from 'svelte';
+  import { browser } from '$app/environment';
   import { page } from '$app/state';
 
   let { data } = $props();
@@ -91,7 +93,14 @@
   }
 
   let copied = $state(false);
+  let jumpTo = $derived.by(() => {
+    return page.params.idx, undefined;
+  });
 </script>
+
+<svelte:head>
+  <title>Tranim App | Pitch</title>
+</svelte:head>
 
 <div class="h-screen w-screen">
   <div class="h-1 bg-orange-50">
@@ -106,6 +115,8 @@
         <IconButton
           icon={copied ? 'fa-solid fa-check' : 'fa-solid fa-link'}
           onclick={async () => {
+            if (!browser) return;
+
             navigator.clipboard.writeText(window.location.href);
 
             copied = true;
@@ -116,6 +127,8 @@
           shortcut={copied ? undefined : 'mod+c'}
         />
       </div>
+
+      <div class="w-34"></div>
 
       <div class="flex items-center gap-2">
         {#key pitch.idx}
@@ -143,11 +156,24 @@
         {/key}
       </div>
 
+      <div class="w-34">
+        <form action={`/pitch/${page.params.eventId}/${page.params.pitcherId}/${jumpTo}`}>
+          <Input
+            bind:value={jumpTo}
+            type="number"
+            placeholder="Jump to..."
+            shortcut="j"
+            min={1}
+            max={pitch.cnt}
+          />
+        </form>
+      </div>
+
       <div class="flex w-34 gap-2">
         <IconButton
           icon="fa-regular fa-expand"
           onclick={() => (strikeZone = !strikeZone)}
-          tooltip="Show strike zone"
+          tooltip={strikeZone ? 'Hide strike zone' : 'Show strike zone'}
           shortcut="z"
         />
 
@@ -155,7 +181,7 @@
           icon="fa-solid {pin1 ? 'fa-thumbtack-slash' : 'fa-thumbtack'}"
           smallIcon="fa-solid fa-1"
           onclick={() => (pin1 = !pin1)}
-          tooltip="Pin to 1st position"
+          tooltip={pin1 ? 'Unpin from 1st position' : 'Pin to 1st position'}
           shortcut="1"
         />
 
@@ -163,7 +189,7 @@
           icon="fa-solid {pin2 ? 'fa-thumbtack-slash' : 'fa-thumbtack'}"
           smallIcon="fa-solid fa-2"
           onclick={() => (pin2 = !pin2)}
-          tooltip="Pin to 2nd position"
+          tooltip={pin2 ? 'Unpin from 2nd position' : 'Pin to 2nd position'}
           shortcut="2"
         />
       </div>
@@ -202,9 +228,9 @@
 
         <ValueBox
           label="Rotation tilt"
-          value={getTilt(pitch.alpha)}
-          value1={pitch1 ? getTilt(pitch1.alpha) : undefined}
-          value2={pitch2 ? getTilt(pitch2.alpha) : undefined}
+          value={getTilt(pitch.alpha - Math.PI / 2)}
+          value1={pitch1 ? getTilt(pitch1.alpha - Math.PI / 2) : undefined}
+          value2={pitch2 ? getTilt(pitch2.alpha - Math.PI / 2) : undefined}
         />
 
         <ValueBox

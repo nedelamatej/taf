@@ -31,6 +31,7 @@ export const load = async ({ fetch, params }) => {
   const countries = await countriesRes.json();
 
   events.forEach((/** @type {any} */ event) => {
+    event.disabled = event.pitchCnt === 0;
     event.country = countries.find(
       (/** @type {any} */ country) => country.id === event.country
     ).name;

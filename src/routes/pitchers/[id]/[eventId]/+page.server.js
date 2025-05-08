@@ -34,6 +34,7 @@ export const load = async ({ fetch, params }) => {
   const countries = await countriesRes.json();
 
   pitchers.forEach((/** @type {any} */ pitcher) => {
+    pitcher.disabled = pitcher.pitchCnt === 0;
     pitcher.name = pitcher.lastName.toUpperCase() + ' ' + pitcher.firstName;
     pitcher.country = countries.find(
       (/** @type {any} */ country) => country.id === pitcher.country

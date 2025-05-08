@@ -21,6 +21,7 @@
   import IconButton from './IconButton.svelte';
   import Input from './Input.svelte';
   import TableRow from './TableRow.svelte';
+  import { browser } from '$app/environment';
 
   /**
    * @typedef {Object} Props
@@ -35,7 +36,10 @@
    *   elements?: Array<{ value: string, label: string, append?: string }> | undefined,
    *   customValues?: boolean | undefined,
    *   placeholder?: string | undefined,
+   *   minlength?: number | undefined,
    *   maxlength?: number | undefined,
+   *   min?: number | undefined,
+   *   max?: number | undefined,
    *   uppercase?: boolean | undefined,
    *   disabled?: boolean | undefined,
    *   primary?: boolean | undefined,
@@ -95,6 +99,8 @@
       <IconButton
         icon={copied ? 'fa-solid fa-check' : 'fa-solid fa-copy'}
         onclick={async () => {
+          if (!browser) return;
+
           const csvString = [
             csvFields.join(','),
             ...data.map((row) => csvFields.map((field) => row[field] || '').join(','))

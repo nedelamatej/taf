@@ -17,6 +17,8 @@
  * @author Matej Nedela
  */
 
+import { browser } from '$app/environment';
+
 const Shortcuts = (function () {
   /**
    * @brief Gets the shortcut for the index
@@ -39,7 +41,7 @@ const Shortcuts = (function () {
   function getLabel(shortcut) {
     shortcut = shortcut.toUpperCase().replaceAll('+', '&nbsp;');
 
-    shortcut = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+    shortcut = (browser && /Mac|iPod|iPhone|iPad/.test(navigator.platform))
       ? shortcut
           .replace('MOD', '<span class="ms-rounded"> keyboard_command_key </span>')
           .replace('ALT', '<span class="ms-rounded"> keyboard_option_key </span>')

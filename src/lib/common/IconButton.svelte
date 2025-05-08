@@ -42,7 +42,7 @@
     smallIcon = undefined,
     onclick,
     tooltip = undefined,
-    shortcut = undefined, // mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+    shortcut = undefined,
     stopPropagation = false,
     disabled = false,
     cssClass = ''

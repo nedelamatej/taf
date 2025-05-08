@@ -41,7 +41,10 @@
    *   elements?: Array<{ value: string, label: string, append?: string }> | undefined,
    *   customValues?: boolean | undefined,
    *   placeholder?: string | undefined,
+   *   minlength?: number | undefined,
    *   maxlength?: number | undefined,
+   *   min?: number | undefined,
+   *   max?: number | undefined,
    *   uppercase?: boolean | undefined,
    *   disabled?: boolean | undefined,
    *   primary?: boolean | undefined,
@@ -89,9 +92,12 @@
             shortcut={columnIdx === fields.length - 1
               ? Shortcuts.getIdxShortcut(rowIdx)
               : undefined}
+            minlength={field.minlength}
             maxlength={field.maxlength}
+            min={field.min}
+            max={field.max}
             uppercase={field.uppercase}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             transparent={true}
           />
         {:else if field.type === 'listbox'}
@@ -101,7 +107,7 @@
             shortcut={columnIdx === fields.length - 1
               ? Shortcuts.getIdxShortcut(rowIdx)
               : undefined}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             transparent={true}
           />
         {:else if field.type === 'combobox'}
@@ -115,7 +121,7 @@
               : undefined}
             maxlength={field.maxlength}
             uppercase={field.uppercase}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             transparent={true}
           />
         {:else if field.type === 'button'}
@@ -129,7 +135,7 @@
               ? Shortcuts.getIdxShortcut(rowIdx)
               : undefined}
             stopPropagation={field.stopPropagation}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             justifyContent={columnIdx === fields.length - 1 ? 'start' : 'center'}
             transparent={true}
             cssClass={field.cssClass}
@@ -146,7 +152,7 @@
             shortcut={columnIdx === fields.length - 1
               ? Shortcuts.getIdxShortcut(rowIdx)
               : undefined}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             justifyContent={columnIdx === fields.length - 1 ? 'start' : 'center'}
             transparent={true}
             cssClass={field.cssClass}
@@ -160,7 +166,7 @@
               ? Shortcuts.getIdxShortcut(rowIdx)
               : undefined}
             stopPropagation={field.stopPropagation}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             cssClass={field.cssClass}
           />
         {:else if field.type === 'iconButtonLink'}
@@ -173,7 +179,7 @@
             shortcut={columnIdx === fields.length - 1
               ? Shortcuts.getIdxShortcut(rowIdx)
               : undefined}
-            disabled={field.disabled}
+            disabled={field.disabled || value.disabled === true}
             cssClass={field.cssClass}
           />
         {/if}

@@ -23,6 +23,10 @@
   let { data } = $props();
 </script>
 
+<svelte:head>
+  <title>Tranim App | Organizations</title>
+</svelte:head>
+
 <div class="mx-auto flex max-w-7xl flex-col gap-20 px-10 py-20">
   <div class="flex flex-col gap-2">
     <nav class="flex items-center gap-2 text-sm text-neutral-400">

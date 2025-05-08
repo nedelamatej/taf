@@ -26,11 +26,15 @@
   /**
    * @typedef {Object} Props
    *
-   * @property {string} value
+   * @property {string | number | undefined} value
    * @property {string} [label]
+   * @property {'text' | 'number'} [type]
    * @property {string} [placeholder]
    * @property {string} [shortcut] - mousetrap shortcut (e.g. 'mod+enter', 'mod+backspace', 'alt+a')
+   * @property {number} [minlength]
    * @property {number} [maxlength]
+   * @property {number} [min]
+   * @property {number} [max]
    * @property {boolean} [uppercase]
    * @property {boolean} [disabled]
    * @property {boolean} [transparent]
@@ -40,9 +44,13 @@
   let {
     value = $bindable(),
     label = undefined,
+    type = 'text',
     placeholder = undefined,
     shortcut = undefined,
+    minlength = undefined,
     maxlength = undefined,
+    min = undefined,
+    max = undefined,
     uppercase = false,
     disabled = false,
     transparent = false
@@ -82,13 +90,17 @@
       bind:value
       bind:this={element}
       id={elementId}
+      {type}
       {placeholder}
+      {minlength}
       {maxlength}
+      {min}
+      {max}
       {disabled}
       class="
         {uppercase ? 'uppercase' : ''}
         {transparent ? 'bg-transparent' : 'bg-white'}
-        mousetrap w-full rounded-md border-0 px-3 py-2 text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 outline-none ring-inset placeholder:text-neutral-400 placeholder:opacity-100 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
+        w-full rounded-md border-0 px-3 py-2 text-base text-neutral-800 shadow-sm ring-1 ring-neutral-300 outline-none ring-inset placeholder:text-neutral-400 placeholder:opacity-100 focus:ring-2 focus:ring-orange-500 disabled:cursor-not-allowed disabled:bg-neutral-100 disabled:text-neutral-600"
     />
 
     {#if shortcut && !disabled}
@@ -101,3 +113,9 @@
     {/if}
   </div>
 </div>
+
+<style>
+  input[type='number'] {
+    appearance: textfield;
+  }
+</style>
