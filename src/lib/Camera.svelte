@@ -98,6 +98,13 @@
     controls.setPosition(PITCHING_DISTANCE / 2, 10, 0, true);
   }
 
+  /**
+   * @brief Sets the camera position for the video initial view
+   */
+  export function setVideoInitialView() {
+    controls.setPosition(PITCHING_DISTANCE / 2, 0.75, -10);
+  }
+
   const { dom, invalidate } = useThrelte();
 
   const camera = new PerspectiveCamera();

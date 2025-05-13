@@ -30,6 +30,331 @@
   import { untrack } from 'svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/state';
+  import { onMount } from 'svelte';
+
+  let captions = $state();
+
+  onMount(async () => {
+    if (data.pitch.idx === 1) {
+      document.getElementsByTagName('div')[0].classList.add('!hidden');
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      document.getElementsByTagName('div')[0].classList.remove('!hidden');
+
+      captions = undefined;
+      camera.setVideoInitialView();
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // left handed batter view
+      captions = 'Přednastavený pohled pravorukého pálkaře';
+      document
+        .getElementsByTagName('button')[4]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[4].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[4]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // right handed batter view
+      captions = 'Přednastavený pohled levorukého pálkaře';
+      document
+        .getElementsByTagName('button')[5]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[5].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[5]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // pitcher view
+      captions = 'Přednastavený pohled nadhazovače';
+      document
+        .getElementsByTagName('button')[6]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[6].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[6]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // catcher view
+      captions = 'Přednastavený pohled chytače';
+      document
+        .getElementsByTagName('button')[7]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[7].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[7]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // side view
+      captions = 'Přednastavený boční pohled';
+      document
+        .getElementsByTagName('button')[8]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[8].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[8]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // top view
+      captions = 'Přednastavený horní pohled';
+      document
+        .getElementsByTagName('button')[9]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[9].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[9]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // default view
+      captions = 'Výchozí pohled kamery';
+      document
+        .getElementsByTagName('button')[5]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[5].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[5]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // move forward
+      captions = 'Posun o nadhoz vpřed';
+      document
+        .getElementsByTagName('a')[2]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('a')[2].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[2]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // move backward
+      captions = 'Posun o nadhoz vzad';
+      document
+        .getElementsByTagName('a')[1]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('a')[1].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[1]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // jump to 10th pitch
+      captions = 'Přeskočení na 10. nadhoz';
+      document
+        .getElementsByTagName('input')[0]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      jumpTo = 1;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      jumpTo = 10;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('input')[0].form?.submit();
+    } else if (data.pitch.idx === 10) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // hide strikezone
+      captions = 'Skrytí strikezóny';
+      document
+        .getElementsByTagName('button')[1]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[1].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[1]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // show strikezone
+      captions = 'Zobrazení strikezóny';
+      document
+        .getElementsByTagName('button')[1]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[1].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[1]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // pin current pitch
+      captions = 'Připnutí aktuálního nadhozu';
+      document
+        .getElementsByTagName('button')[2]
+        .classList.add('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[2].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[2]
+        .classList.remove('!ring-2', '!ring-inset', '!ring-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // move to 13th pitch
+      captions = 'Posun na 13. nadhoz';
+      document
+        .getElementsByTagName('a')[4]
+        .classList.add('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('a')[4].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[4]
+        .classList.remove('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[4]
+        .classList.add('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('a')[4].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[4]
+        .classList.remove('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[4]
+        .classList.add('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('a')[4].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('a')[4]
+        .classList.remove('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      // pin current pitch
+      captions = 'Označení nadhozu typem "changeup"';
+      document
+        .getElementsByTagName('button')[13]
+        .classList.add('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document.getElementsByTagName('button')[13].click();
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      document
+        .getElementsByTagName('button')[13]
+        .classList.remove('!outline-2', '!outline-offset-2', '!outline-blue-800');
+
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      captions = undefined;
+      camera.setSideView();
+    }
+  });
 
   let { data } = $props();
 
@@ -102,7 +427,7 @@
   <title>Tranim App | Pitch</title>
 </svelte:head>
 
-<div class="h-screen w-screen">
+<div class="h-[810px] w-screen">
   <div class="h-1 bg-orange-50">
     <div class="h-1 bg-orange-500" style="width: {(pitch.idx / pitch.cnt) * 100}%;"></div>
   </div>
@@ -196,7 +521,7 @@
     </div>
   </div>
 
-  <div class="relative h-[calc(100vh-116px)]">
+  <div class="relative h-[694px]">
     <Canvas>
       <Scene bind:camera data0={pitch} data1={pitch1} data2={pitch2} {strikeZone} />
     </Canvas>
@@ -256,6 +581,14 @@
         />
       </div>
     </div>
+
+    {#if captions}
+      <div class="absolute top-53 left-0 flex w-full justify-center">
+        <div class="bg-blue-200/42 px-3 py-1.5 text-xl font-medium text-blue-800">
+          {captions}
+        </div>
+      </div>
+    {/if}
 
     <div class="absolute right-0 bottom-0 flex w-28 flex-wrap gap-2 px-3 py-2">
       <IconButton
